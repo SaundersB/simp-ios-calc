@@ -34,19 +34,30 @@ class ViewController: UIViewController {
             enter()
         }
         switch operation {
-            case "×":
-                if operandStack.count >= 2 {
-                    displayValue = operandStack.removeLast() * operandStack.removeLast()
-                    enter()
-                }
-                
-//            case "÷":
-//            case "+":
-//            case "−":
+        case "×": performOperation { $0 * $1 }
+        case "÷": performOperation { $1 / $0 }
+        case "+": performOperation { $0 + $1 }
+        case "−": performOperation { $1 - $0 }
+        case "√": performOperationSingle { sqrt($0) }
         default: break
 
         }
     }
+    
+    func performOperation(operation: (Double,Double) -> Double) {
+        if operandStack.count >= 2 {
+            displayValue = operation(operandStack.removeLast(), operandStack.removeLast())
+            enter()
+        }
+    }
+    
+    func performOperationSingle(operation: Double -> Double) {
+        if operandStack.count >= 2 {
+            displayValue = operation(operandStack.removeLast())
+            enter()
+        }
+    }
+    
     
     var operandStack: Array<Double> = Array<Double>()
     
