@@ -10,12 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
 
-
+    // Use the ! to unwrap the inferred variables.
     @IBOutlet weak var display: UILabel!
     
+    // Removes the leading 0 in the display.
     var userIsInTheMiddleOfTypingANumber: Bool = false
 
-
+    // Outputs the numbers to the display
     @IBAction func appendDigit(sender: UIButton) {
         let digit = sender.currentTitle!
         if userIsInTheMiddleOfTypingANumber {
@@ -26,9 +27,25 @@ class ViewController: UIViewController {
             userIsInTheMiddleOfTypingANumber = true
         }
     }
+    
+    var operandStack: Array<Double> = Array<Double>()
+    
     @IBAction func enter() {
         userIsInTheMiddleOfTypingANumber = false
+        operandStack.append(displayValue)
+        println("operandStack = \(operandStack)")
         
+    }
+    
+    var displayValue: Double {
+        get {
+            return NSNumberFormatter().numberFromString(display.text!)!.doubleValue
+        
+        }
+        set {
+            display.text = "\(newValue)" // Converts a string to a double.
+            userIsInTheMiddleOfTypingANumber = false
+        }
     }
 }
 
