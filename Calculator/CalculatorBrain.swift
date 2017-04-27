@@ -12,9 +12,8 @@ class CalculatorBrain
 {
     enum Op {
         case Operand(Double)
-        case Operation(String,Double -> Double)
+        case Operation(String,(Double) -> Double)
         case BinaryOperation(String, (Double,Double) -> Double)
-        
     }
     
     var opStack = [Op]()
@@ -27,10 +26,7 @@ class CalculatorBrain
         knownOps ["+"] = Op.BinaryOperation("+") {$0 + $1}
         knownOps ["−"] = Op.BinaryOperation("-") {$1 - $0}
         //knownOps ["√"] = Op.UnaryOperation("√",sqrt)
-    
-        
     }
-    
     
     func pushOperand(operand: Double) {
         opStack.append(Op.Operand(operand))
